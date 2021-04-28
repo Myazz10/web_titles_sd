@@ -13,12 +13,13 @@ from website.models import Website
 
 def spider(request, url):
     options = Options()
+    # This method should be used for development.
     '''options.add_argument('--headless')
     options.add_argument('--disable-gpu')  # Last I checked this was necessary.
     driver = webdriver.Chrome(executable_path=binary_path, chrome_options=options)'''
 
+    # This method is to be used for production on Heroku...
     options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
-
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
