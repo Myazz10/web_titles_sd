@@ -1,1 +1,1 @@
-web:gunicorn SeleniumDjango.wsgi
+web: gunicorn SeleniumDjango.wsgi
