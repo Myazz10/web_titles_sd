@@ -1,0 +1,7 @@
+asgiref==3.3.4
+chromedriver-binary==90.0.4430.24.0
+Django==3.2
+pytz==2021.1
+selenium==3.141.0
+sqlparse==0.4.1
+urllib3==1.26.4

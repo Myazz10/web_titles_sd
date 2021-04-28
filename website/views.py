@@ -1,0 +1,43 @@
+from django.contrib import messages
+from django.shortcuts import render
+import time
+from selenium import webdriver
+from selenium.common.exceptions import InvalidArgumentException
+from selenium.webdriver.chrome.options import Options
+from chromedriver_py import binary_path
+
+from website.models import Website
+
+
+def spider(request, url):
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')  # Last I checked this was necessary.
+    driver = webdriver.Chrome(executable_path=binary_path, chrome_options=options)
+
+    try:
+        driver.get(url)
+        messages.success(request, 'Search was successful!')
+    except InvalidArgumentException:
+        messages.error(request, 'Invalid url...')
+
+    time.sleep(10)
+    text = driver.title
+
+    driver.close()
+
+    return text
+
+
+def search(request):
+    result = ''
+
+    if request.method == 'POST':
+        website = Website()
+        url = request.POST['search']
+        result = spider(request, url)
+
+        website.title = result
+        website.save()
+
+    return render(request, 'search.html', {'result': result})
